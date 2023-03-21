@@ -1,0 +1,3 @@
+harbor_domain_name: <EXAMPLEHARBORDOMAIN.COM>
+harbor_notary_domain_name: <EXAMPLEHARBORNOTARYDOMAIN.COM>
+keycloak_domain_name: <EXAMPLEKEYCLOAKDOMAIN.COM>

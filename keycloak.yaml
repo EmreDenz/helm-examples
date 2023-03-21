@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+    - vars.yaml
+  tasks:
+    - name: Create Ingress for Keycloak
+      kubernetes.core.k8s:
+        kubeconfig: ~/.kube/config
+        state: present
+        kind: Ingress
+        name: keycloak-ingress
+        namespace: keycloak
+        definition:
+          apiVersion: networking.k8s.io/v1
+          kind: Ingress
+          metadata:
+            name: keycloak-ingress
+          spec:
+            tls:
+              - hosts:
+                  - "{{ keycloak_domain_name }}"
+            rules:
+              - host: "{{ keycloak_domain_name }}"
+                http:
+                  paths:
+                    - backend:
+                        serviceName: keycloak
+                        servicePort: 8080

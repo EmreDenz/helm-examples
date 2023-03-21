@@ -1,0 +1,26 @@
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+    - vars.yaml
+  tasks:
+    - name: Get minikube ip
+      shell: minikube ip
+      register: minikube_ip
+
+    - name: Add to /etc/hosts
+      become: yes
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: '{{ minikube_ip.stdout }}  {{ keycloak_domain_name}}'
+
+    - name: Add to /etc/hosts
+      become: yes
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: '{{ minikube_ip.stdout }}  {{ harbor_domain_name }}'
+
+    - name: Add to /etc/hosts
+      become: yes
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: '{{ minikube_ip.stdout }}  {{ harbor_notary_domain_name }}'
